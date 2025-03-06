@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Edit Date</title>
+        <style>
+            table, th, td {
+                            border: 1px solid black;
+                            border-collapse: collapse;
+                          }
+            .num_input { width: 45px; height: 20px;}
+            .text_input { width: 45px; height: 20px; }
+        </style>
+    </head>
+    <body>
+        <div>
+            <a href="{{ url_for('AdminHub') }}">Home</a>
+        </div>
+        <hr>
+        <div>
+            <h1>EDIT DATE {{monitor.TimeStart}}</h1>
+        </div>
+        <hr>
+        <form method="post">
+            <table cellpadding="5" cellspacing="2" align="center">
+                <tr>
+                <td>{{ monitor.Repka }}</td><td>{{ monitor.Name }}</td><td>{{ monitor.TimeStart.strftime('%d-%m-%Y') }}</td><td>{{ monitor.TimeStart.strftime('%H:%M') }}</td><td>{{ monitor.Area }}</td><td>{{ monitor.TimeSpray }}</td><td>{{ monitor.TimePyrge }}</td>
+                </tr>
+                <tr>
+                 <td></td><td></td><td><input type="date" name="date" value="{{ monitor.TimeStart.strftime('%Y-%m-%d') }}"></td><td><input type="time" name="time" value="{{ monitor.TimeStart.strftime('%H:%M') }}"></td><td><input type="text" class="text_input" name="area" maxlength="5" value="{{ monitor.Area }}"></td><td><input type="number" min="1" max="120" class="num_input" name="spray" value="{{ monitor.TimeSpray }}"></td><td><input type="number" min="1" max="10" name="pyrge" class="num_input" value="{{ monitor.TimePyrge }}"></td><td><form method="post"><input type="submit" name="select" value="Обновить"></form></td>
+                </tr>
+                <tr>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><form method="post"><input type="submit" name="select" value="Удалить"></form></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

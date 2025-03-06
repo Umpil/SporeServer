@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>AdminHub</title>
+        <style>
+            table, th, td {
+                            border: 1px solid black;
+                            border-collapse: collapse;
+                          }
+            .num_input { width: 45px; height: 20px;}
+            .text_input { width: 45px; height: 20px; }
+            .text_input_user { width: 70px; height: 20px; }
+        </style>
+    </head>
+    <body>
+        <div>
+            <a href="{{ url_for('AdminHub') }}">Home</a>
+        </div>
+        <hr>
+        <div>
+            <h1>ADMIN HUB</h1>
+        </div>
+        <hr>
+        <form method="post">
+            <table cellpadding="5" cellspacing="2" align="center">
+                <tr>
+                    <td>Repka</td><td>TimeStart</td><td>Status</td><td>Area</td><td>Spray</td><td>Pyrge</td><td>Ask</td><td>ConStatus</td><td>Result</td><td>FirstPhoto</td><td>BestPhoto</td><td>LastPhoto</td><td>username</td>
+                </tr>
+                <tr>
+                    <td><input class="num_input" type="number" min="0" value="0" name="add_repka" width=30 formmethod="post"></td><td><input type="date" value={{today.strftime('%Y-%m-%d')}} name="add_date" formmethod="post"></td><td><input type="time" value={{today.strftime('%H:%M')}} name="add_time" formmethod="post"></td><td><input type="text" class="text_input" value="15x30" maxlength="5" name="add_area" formmethod="post"></td><td><input class="num_input" value="1" type="number" min="1"  max="120" name="add_spray" formmethod="post"></td><td><input  class="num_input" type="number" value="1" min="1" max="10" name="add_pyrge" formmethod="post"></td><td><input type="number" value="5" class="num_input" min="5" max="360" name="add_ask" formmethod="post"></td><td>username: <input type="text" name="add_user" formmethod="post" class="text_input_user"></td><td><input type="submit" name="Add" value="Добавить"></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                {% for repk, nex in Next.items() %}
+                {% if nex is not None %}
+                <tr>
+                    <td>{{nex.Repka}}</td><td >{{nex.TimeStart}}</td><td>{{nex.Status}}</td><td>{{nex.Area}}</td><td>{{nex.TimeSpray}}</td><td>{{nex.TimePyrge}}</td><td>{{nex.TimeAsk}}</td><td>{{nex.ControlStatus}}</td><td>{{nex.Result}}</td><td>{{nex.FirstPhoto}}</td><td>{{nex.BestPhoto}}</td><td>{{nex.LastPhoto}}</td><td>{{nex.username}}</td><td><a href="/AdminHubEdit/{{ nex.Repka }}/{{ nex.TimeStart }}">Редактировать</a></td><td><form method="post"><input type="submit" value="Копировать" name="copy_{{ nex.TimeStart }}_{{ nex.Repka }}"> <input type="number" value="1" class="num_input" min="1" name="times"> раз,<br> через <input type="number" value="60" name="recall" class="num_input" min="60"> минут</form></td>
+                </tr>
+                {% endif%}
+                {% endfor %}
+                {% for repk, work in InWork.items() %}
+                    {% if work is not None%}
+                        {% for w in work%}
+                        <tr>
+                            <td>{{w.Repka}}</td><td >{{w.TimeStart}}</td><td>{{w.Status}}</td><td>{{w.Area}}</td><td>{{w.TimeSpray}}</td><td>{{w.TimePyrge}}</td><td>{{w.TimeAsk}}</td><td>{{w.ControlStatus}}</td><td>{{w.Result}}</td><td>{{w.FirstPhoto}}</td><td>{{w.BestPhoto}}</td><td>{{w.LastPhoto}}</td><td>{{w.username}}</td><td><a href="/AdminHubEdit/{{ w.Repka }}/{{ w.TimeStart }}">Редактировать</a></td><td><form method="post"><input type="submit" value="Копировать" name="copy_{{ w.TimeStart }}_{{ w.Repka }}"> <input type="number" class="num_input" value="1" min="1" name="times"> раз,<br> через <input  class="num_input" type="number" value="60" name="recall" min="60"> минут</form></td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                {% for mon in monitor%}
+                <tr>
+                    <td>{{mon.Repka}}</td><td >{{mon.TimeStart}}</td><td>{{mon.Status}}</td><td>{{mon.Area}}</td><td>{{mon.TimeSpray}}</td><td>{{mon.TimePyrge}}</td><td>{{mon.TimeAsk}}</td><td>{{mon.ControlStatus}}</td><td>{{mon.Result}}</td><td>{{mon.FirstPhoto}}</td><td>{{mon.BestPhoto}}</td><td>{{mon.LastPhoto}}</td><td>{{mon.username}}</td><td><a href="/AdminHubEdit/{{ mon.Repka }}/{{ mon.TimeStart }}">Редактировать</a></td><td><form method="post"><input type="submit" value="Копировать" name="copy_{{ mon.TimeStart }}_{{ mon.Repka }}"> <input type="number" value="1" min="1" class="num_input" name="times"> раз,<br> через <input type="number" value="60" name="recall" class="num_input" min="60"> минут</form></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </body>
+</html>
